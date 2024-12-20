@@ -1,0 +1,27 @@
+//this is only used for my personal workflow, to modify this with your workflow, you need to list any change you want and find the MEL command of that modification.
+//what it does is simply a UI preset that i click everytime i open Maya, it solely works for viewport elements and interactability, we can also add lines to start other tools here.
+
+//A. CUSTOM VIEWPORT LAYOUT
+setNamedPanelLayout "Front/Persp"; updateToolbox();
+
+lookThroughModelPanel "persp" modelPanel3;
+
+//B. SET SCENE CAMERA
+//on the CODENAME line, you can modify this with the camera name of your project to make it consistent
+select `ls -type "camera" "*CODENAME*"`;
+string $selectedCameras[] = `ls -selection`;
+lookThroughModelPanel $selectedCameras[0] modelPanel4;
+
+//with this keywording, maya will always give me camera view despite every shot having different SC and SH number
+//if your camera has : on the name you can use that as keyword too
+
+//C. VIEWPORT ELEMENT VISIBILITY
+modelEditor -e -displayTextures true -joints false modelPanel3;
+modelEditor -e -locators false -nurbsCurves false -joints false -dimensions false -follicles false -controllers false -displayTextures true modelPanel4;
+
+//B. VIEWPORT ELEMENT INTERACTIBILITY
+setObjectPickMask "Surface" false;
+setObjectPickMask "Joint" false;
+
+
+//WARNING, sometimes a maya file refuse to divide the viewport properly, when that happens try moving one number up on modelPanel, so instead you use modelPanel14 and modelPanel15
